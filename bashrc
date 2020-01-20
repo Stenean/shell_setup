@@ -390,3 +390,5 @@ fi
 # }}}
 
 source $HOME/.config/broot/launcher/bash/br
+
+[[ -s "$HOME/.profile" ]] && source $HOME/.profile

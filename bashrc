@@ -155,7 +155,7 @@ case $- in
       *) return;;
 esac
 
-PATH="/opt/vim/bin:$HOME/bin:$PATH:/usr/sbin:/sbin:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games"
+PATH="/opt/vim/bin:$HOME/bin:/usr/local/bin:$PATH:/usr/sbin:/sbin:/usr/bin:/bin:/usr/local/games:/usr/games"
 
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options

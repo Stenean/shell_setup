@@ -1,5 +1,6 @@
 [core]
     excludesfile = ~/.gitignore
+    pager = diff-so-fancy | less --tabs=4 -RFX
 [difftool]
     prompt = false
     trustExitCode = true

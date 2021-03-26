@@ -345,7 +345,9 @@ if [ -e "$(which powerline-daemon)" ]; then
     powerline-daemon -q
 fi
 
-if [ -f "/usr/lib/python3.8/site-packages/powerline/bindings/bash/powerline.sh" ]; then
+if [ -f "/usr/lib/python3.9/site-packages/powerline/bindings/bash/powerline.sh" ]; then
+    . /usr/lib/python3.9/site-packages/powerline/bindings/bash/powerline.sh
+elif [ -f "/usr/lib/python3.8/site-packages/powerline/bindings/bash/powerline.sh" ]; then
     . /usr/lib/python3.8/site-packages/powerline/bindings/bash/powerline.sh
 elif [ -f "/usr/lib/python3.7/site-packages/powerline/bindings/bash/powerline.sh" ]; then
     . /usr/lib/python3.7/site-packages/powerline/bindings/bash/powerline.sh
@@ -394,3 +396,5 @@ fi
 source $HOME/.config/broot/launcher/bash/br
 
 [[ -s "$HOME/.profile" ]] && source $HOME/.profile
+
+export KUBECONFIG=$KUBECONFG:$HOME/.kube/config:$HOME/.kube/conv-eks-config

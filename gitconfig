@@ -16,7 +16,7 @@
 [mergetool]
     keepBackup = false
 [pull]
-    rebase = true
+	rebase = true
 [color]
     ui = true
 [color "diff-highlight"]
@@ -31,3 +31,5 @@
     old = red bold
     new = green bold
     whitespace = red reverse
+[commit]
+	gpgsign = false

@@ -398,3 +398,5 @@ source $HOME/.config/broot/launcher/bash/br
 [[ -s "$HOME/.profile" ]] && source $HOME/.profile
 
 export KUBECONFIG=$KUBECONFG:$HOME/.kube/config:$HOME/.kube/conv-eks-config
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash

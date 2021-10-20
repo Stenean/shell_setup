@@ -1,6 +1,8 @@
 #
 # ~/.bashrc
 #
+PATH="/opt/vim/bin:$HOME/bin:/usr/local/bin:$PATH:/usr/sbin:/sbin:/usr/bin:/bin:/usr/local/games:/usr/games"
+
 
 [[ $- != *i* ]] && return
 
@@ -31,13 +33,20 @@ colors() {
 	done
 }
 
-[[ -r "/usr/local/etc/bash_completion.d/" ]] && export BASH_COMPLETION_COMPAT_DIR=/usr/local/etc/bash_completion.d/
-
-[[ -r "/usr/share/bash-completion/bash_completion" ]] && . "/usr/share/bash-completion/bash_completion"
-[[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && . "/usr/local/etc/profile.d/bash_completion.sh"
+if [[ -r "/usr/local/etc/bash_completion.d/" ]]; then
+    export BASH_COMPLETION_COMPAT_DIR=/usr/local/etc/bash_completion.d/
+fi
+if [[ -r "/usr/share/bash-completion/bash_completion" ]]; then
+    . "/usr/share/bash-completion/bash_completion"
+fi
+if [[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]]; then
+    . "/usr/local/etc/profile.d/bash_completion.sh"
+fi
 
 # making Mac more like linux
-[ -r /usr/local/opt/coreutils/libexec/gnubin ] && PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
+if [ -r /usr/local/opt/coreutils/libexec/gnubin ]; then
+    PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
+fi
 
 # Change the window title of X terminals
 case ${TERM} in
@@ -156,8 +165,6 @@ case $- in
     *i*) ;;
       *) return;;
 esac
-
-PATH="/opt/vim/bin:$HOME/bin:/usr/local/bin:$PATH:/usr/sbin:/sbin:/usr/bin:/bin:/usr/local/games:/usr/games"
 
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
@@ -337,6 +344,8 @@ function precmd() {
 }
 # }}}
 
+[[ -s "$HOME/.profile" ]] && source $HOME/.profile
+
 # Python and pyenv setup {{{
 POWERLINE_BASH_CONTINUATION=1
 POWERLINE_BASH_SELECT=1
@@ -394,8 +403,6 @@ fi
 # }}}
 
 source $HOME/.config/broot/launcher/bash/br
-
-[[ -s "$HOME/.profile" ]] && source $HOME/.profile
 
 export KUBECONFIG=$KUBECONFG:$HOME/.kube/config:$HOME/.kube/conv-eks-config
 

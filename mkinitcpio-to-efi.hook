@@ -1,0 +1,15 @@
+[Trigger]
+Operation = Install
+Operation = Upgrade
+Operation = Remove
+Type = Path
+Target = boot/initramfs*.img
+Target = boot/vmlinuz-*.img
+Target = boot/amd-ucode.img
+Target = usr/lib/modules/*/vmlinuz
+Target = usr/lib/initcpio/*
+[Action]
+Description = Copy generated kernel to EFI...
+When = PostTransaction
+Exec = /opt/shell_setup/bin/copy-kernel-to-efi.sh
+NeedsTargets

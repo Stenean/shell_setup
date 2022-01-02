@@ -354,7 +354,9 @@ if [ -e "$(which powerline-daemon)" ]; then
     powerline-daemon -q
 fi
 
-if [ -f "/usr/lib/python3.9/site-packages/powerline/bindings/bash/powerline.sh" ]; then
+if [ -f "/usr/lib/python3.10/site-packages/powerline/bindings/bash/powerline.sh" ]; then
+    . /usr/lib/python3.10/site-packages/powerline/bindings/bash/powerline.sh
+elif [ -f "/usr/lib/python3.9/site-packages/powerline/bindings/bash/powerline.sh" ]; then
     . /usr/lib/python3.9/site-packages/powerline/bindings/bash/powerline.sh
 elif [ -f "/usr/lib/python3.8/site-packages/powerline/bindings/bash/powerline.sh" ]; then
     . /usr/lib/python3.8/site-packages/powerline/bindings/bash/powerline.sh

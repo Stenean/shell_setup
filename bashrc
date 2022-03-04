@@ -177,6 +177,12 @@ shopt -s histappend
 HISTSIZE=1000
 HISTFILESIZE=2000
 
+# Enable colored less output
+export LESS='-R --use-color -Dd+r$Du+b'
+
+# Enable colored man output
+export MANPAGER="less -R --use-color -Dd+r -Du+b"
+
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
 shopt -s checkwinsize
@@ -399,8 +405,13 @@ fi
 # pyenv virtualenvwrapper
 
 
+# Old versions of grc:
 [[ -s "/etc/grc.bashrc"  ]] && source /etc/grc.bashrc
 [[ -s "/etc/profile.d/grc.bashrc" ]] && source /etc/profile.d/grc.bashrc
+
+# GRC 1.13:
+export GRC_ALIASES=true
+[[ -s "/etc/profile.d/grc.sh" ]] && source /etc/profile.d/grc.sh
 
 # }}}
 

@@ -409,6 +409,9 @@ fi
 [[ -s "/etc/grc.bashrc"  ]] && source /etc/grc.bashrc
 [[ -s "/etc/profile.d/grc.bashrc" ]] && source /etc/profile.d/grc.bashrc
 
+# MacOs version:
+[[ -s "/usr/local/etc/grc.bashrc"  ]] && source /usr/local/etc/grc.bashrc
+
 # GRC 1.13:
 export GRC_ALIASES=true
 [[ -s "/etc/profile.d/grc.sh" ]] && source /etc/profile.d/grc.sh

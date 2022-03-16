@@ -1,0 +1,14 @@
+[Unit]
+Description=Legion Lenovo 5 pro keyboard backlight (Orange)
+
+Wants=network.target
+After=syslog.target network-online.target suspend.target hibernate.target hybrid-sleep.target suspend-then-hibernate.target
+
+[Service]
+User=jj
+Type=oneshot
+ExecStart=/usr/bin/python /usr/local/bin/l5p_kbl.py static 331100
+RemainAfterExit=true
+
+[Install]
+WantedBy=multi-user.target suspend.target hibernate.target hybrid-sleep.target suspend-then-hibernate.target

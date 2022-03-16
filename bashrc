@@ -178,7 +178,7 @@ HISTSIZE=1000
 HISTFILESIZE=2000
 
 # Enable colored less output
-export LESS='-R --use-color -Dd+r$Du+b'
+# export LESS='-R --use-color -Dd+r$Du+b'
 
 # Enable colored man output
 export MANPAGER="less -R --use-color -Dd+r -Du+b"

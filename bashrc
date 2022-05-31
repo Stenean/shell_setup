@@ -260,6 +260,9 @@ alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo
 export GPG_TTY=$(tty)
 # Make the ssh agent the gpg-agent process
 export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket);
+if [ "$(uname -s)" == "Darwin" ]; then
+    test -z "$(ps aux | sed -e '/gpg/!d' -e '/sed/d')" && gpgconf --launch gpg-agent
+fi
 
 # Alias definitions.
 # You may want to put all your additions into a separate file like

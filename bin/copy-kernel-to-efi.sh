@@ -1,7 +1,11 @@
 #!/bin/sh
 
-for f in /boot/vmlinuz-*; do 
+VMLINUZ=vmlinuz-*
+INITRAMFS=initramfs-*{x86_64,lqx}.img
+
+eval rm -v /boot/efi/EFI/ManjaroKernel/$VMLINUZ /boot/efi/EFI/ManjaroKernel/$INITRAMFS
+for f in /boot/$VMLINUZ; do
     cp -v -- "$f" "/boot/efi/EFI/ManjaroKernel/$(basename $f).efi"
 done
-cp -v /boot/initramfs-*-x86_64.img /boot/efi/EFI/ManjaroKernel/
+eval cp -v /boot/$INITRAMFS /boot/efi/EFI/ManjaroKernel/
 cp -v /boot/amd-ucode.img /boot/efi/EFI/ManjaroKernel/

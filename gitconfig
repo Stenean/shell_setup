@@ -5,16 +5,16 @@
     prompt = false
     trustExitCode = true
 [merge]
-    tool = diffconflicts
+	tool = diffconflicts
 [mergetool "diffconflicts"]
-    cmd = diffconflicts vim $BASE $LOCAL $REMOTE $MERGED
-    trustExitCode = true
+	cmd = vim -c DiffConflicts \"$MERGED\" \"$BASE\" \"$LOCAL\" \"$REMOTE\"
+	trustExitCode = true
     keepBackup = false
 [mergetool "sublimerge"]
     cmd = smerge mergetool \"$BASE\" \"$REMOTE\" \"$LOCAL\" -o \"$MERGED\"
     trustExitCode = true
 [mergetool]
-    keepBackup = false
+	keepBackup = false
 [pull]
 	rebase = true
 [color]

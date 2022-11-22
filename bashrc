@@ -1,7 +1,7 @@
 #
 # ~/.bashrc
 #
-PATH="/opt/vim/bin:$HOME/bin:/usr/local/bin:$PATH:/usr/sbin:/sbin:/usr/bin:/bin:/usr/local/games:/usr/games"
+PATH="/opt/vim/bin:$HOME/.cargo/bin:$HOME/.local/bin:$HOME/bin:/usr/local/bin:$PATH:/usr/sbin:/sbin:/usr/bin:/bin:/usr/local/games:/usr/games"
 
 
 [[ $- != *i* ]] && return
@@ -353,7 +353,11 @@ function precmd() {
 }
 # }}}
 
-[[ -s "$HOME/.profile" ]] && source $HOME/.profile
+if [[ -s "$HOME/.profile" ]]; then
+    if [[ -z "$(cat /etc/*-release | grep -i debian)" ]]; then
+	source $HOME/.profile
+    fi
+fi
 
 # Python and pyenv setup {{{
 POWERLINE_BASH_CONTINUATION=1
@@ -379,6 +383,8 @@ elif [ -f "/usr/local/lib/python2.7/dist-packages/powerline/bindings/bash/powerl
     . /usr/local/lib/python2.7/dist-packages/powerline/bindings/bash/powerline.sh
 elif [ -f "/usr/lib/python2.7/site-packages/powerline/bindings/bash/powerline.sh" ]; then
     . /usr/lib/python2.7/site-packages/powerline/bindings/bash/powerline.sh
+elif [ -f "/usr/share/powerline/bindings/bash/powerline.sh" ]; then
+    . /usr/share/powerline/bindings/bash/powerline.sh
 fi
 
 export PYENV_VIRTUALENVWRAPPER_PREFER_PYVENV="true"
@@ -421,7 +427,7 @@ export GRC_ALIASES=true
 
 # }}}
 
-source $HOME/.config/broot/launcher/bash/br
+[[ -s "/home/jj/.config/broot/launcher/bash/br" ]] && source $HOME/.config/broot/launcher/bash/br
 
 export KUBECONFIG=$KUBECONFG:$HOME/.kube/config:$HOME/.kube/conv-eks-config
 

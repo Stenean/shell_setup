@@ -413,6 +413,9 @@ fi
 # eval "$(pyenv virtualenv-init -)"
 # pyenv virtualenvwrapper
 
+# Add nodenv
+# @see https://github.com/conversocial/engineering-setup
+eval "$(nodenv init -)"
 
 # Old versions of grc:
 [[ -s "/etc/grc.bashrc"  ]] && source /etc/grc.bashrc

@@ -1,11 +1,15 @@
 [core]
     excludesfile = ~/.gitignore
-    pager = diff-so-fancy | less --tabs=4 -RFX
+    # pager = diff-so-fancy | less --tabs=4 -RFX
+    pager = delta
 [difftool]
     prompt = false
     trustExitCode = true
+[diff]
+    colorMoved = default
 [merge]
-	tool = diffconflicts
+  # tool = diffconflicts
+	conflictstyle = diff3
 [mergetool "diffconflicts"]
 	cmd = vim -c DiffConflicts \"$MERGED\" \"$BASE\" \"$LOCAL\" \"$REMOTE\"
 	trustExitCode = true
@@ -40,3 +44,28 @@
 	required = true
 [credential]
 	helper = cache
+[add "interactive"]
+	useBuiltin = false
+[interactive]
+    diffFilter = delta --color-only --features=interactive
+[delta]
+    navigate = true    # use n and N to move between diff sections
+    light = false      # set to true if you're in a terminal w/ a light background color (e.g. the default macOS terminal)
+    features = decorations
+[delta "interactive"]
+    keep-plus-minus-markers = false
+[delta "decorations"]
+    navigate = true    # use n and N to move between diff sections
+    light = false      # set to true if you're in a terminal w/ a light background color (e.g. the default macOS terminal)
+    line-numbers= true
+    hyperlinks = true
+    side-by-side = true
+    line-numbers-left-format = ""
+    line-numbers-right-format = "│ "
+    commit-decoration-style = blue ol
+    commit-style = raw
+    file-style = omit
+    hunk-header-decoration-style = blue box
+    hunk-header-file-style = red
+    hunk-header-line-number-style = "#067a00"
+    hunk-header-style = file line-number syntax

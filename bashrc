@@ -353,12 +353,6 @@ function precmd() {
 }
 # }}}
 
-if [[ -s "$HOME/.profile" ]]; then
-    if [[ -z "$(cat /etc/*-release | grep -i debian)" ]]; then
-	source $HOME/.profile
-    fi
-fi
-
 # Python and pyenv setup {{{
 POWERLINE_BASH_CONTINUATION=1
 POWERLINE_BASH_SELECT=1
@@ -412,6 +406,12 @@ if type pyenv-virtualenv &> /dev/null; then
 fi
 # eval "$(pyenv virtualenv-init -)"
 # pyenv virtualenvwrapper
+
+if [[ -s "$HOME/.profile" ]]; then
+    if [[ -z "$(cat /etc/*-release | grep -i debian)" ]]; then
+	source $HOME/.profile
+    fi
+fi
 
 # Add nodenv
 # @see https://github.com/conversocial/engineering-setup

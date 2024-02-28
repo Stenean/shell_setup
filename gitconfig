@@ -8,7 +8,7 @@
 [diff]
     colorMoved = default
 [merge]
-  # tool = diffconflicts
+  tool = diffconflicts
 	conflictstyle = diff3
 [mergetool "diffconflicts"]
 	cmd = vim -c DiffConflicts \"$MERGED\" \"$BASE\" \"$LOCAL\" \"$REMOTE\"
@@ -44,8 +44,6 @@
 	required = true
 [credential]
 	helper = cache
-[add "interactive"]
-	useBuiltin = false
 [interactive]
     diffFilter = delta --color-only --features=interactive
 [delta]

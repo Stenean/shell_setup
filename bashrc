@@ -300,6 +300,7 @@ fi
 export PROJECT_HOME="$HOME/Projects"
 export WORKON_HOME="$HOME/.virtualenvs"
 export PAGER="less -FRX"
+export AWS_SHARED_CREDENTIALS_FILE="$HOME/Downloads/credentials"
 
 DEFAULT_USER="kuba"
 
@@ -386,15 +387,7 @@ export PYENV_VIRTUALENV_DISABLE_PROMPT=1
 export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/shims:$PYENV_ROOT/bin:$PATH"
 
-# Lazy load pyenv
-if type pyenv &> /dev/null; then
-    function pyenv() {
-        unset -f pyenv > /dev/null 2>&1
-        eval "$(command pyenv init -)"
-        pyenv "$@"
-    }
-fi
-# eval "$(pyenv init -")
+eval "$(pyenv init -)"
 
 # Lazy load pyenv-virtualenv
 if type pyenv-virtualenv &> /dev/null; then
@@ -435,3 +428,8 @@ export GRC_ALIASES=true
 export KUBECONFIG=$KUBECONFG:$HOME/.kube/config:$HOME/.kube/conv-eks-config
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH=$BUN_INSTALL/bin:$PATH
+export PATH="/usr/local/sbin:$PATH"

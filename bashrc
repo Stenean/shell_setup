@@ -174,8 +174,8 @@ HISTCONTROL=ignoreboth
 shopt -s histappend
 
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
-HISTSIZE=1000
-HISTFILESIZE=2000
+HISTSIZE=10000
+HISTFILESIZE=20000
 
 # Enable colored less output
 # export LESS='-R --use-color -Dd+r$Du+b'
@@ -256,6 +256,8 @@ alias l='ls -CF'
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
+
+export SYSTEMD_EDITOR=vim
 
 export GPG_TTY=$(tty)
 # Make the ssh agent the gpg-agent process
@@ -427,7 +429,7 @@ export GRC_ALIASES=true
 
 export KUBECONFIG=$KUBECONFG:$HOME/.kube/config:$HOME/.kube/conv-eks-config
 
-[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+[[ -e "$(which fzf)" ]] && eval "$(fzf --bash)"
 
 # bun
 export BUN_INSTALL="$HOME/.bun"

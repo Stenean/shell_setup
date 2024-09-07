@@ -1,0 +1,3 @@
+{ "name": "cloud-drive-ui", "type": "BG_CPUIO" }
+{ "name": "cloud-drive-connect", "type": "BG_CPUIO" }
+{ "name": "cloud-drive-daemon", "type": "BG_CPUIO" }

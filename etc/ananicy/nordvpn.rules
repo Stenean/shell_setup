@@ -1,0 +1,3 @@
+# Nordvpn client
+{ "name": "nordvpnd", "type": "LowLatency_RT", "ionice": 1 }
+{ "name": "norduserd", "type": "LowLatency_RT", "ionice": 1 }

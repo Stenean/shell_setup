@@ -392,7 +392,6 @@ pyenv shell 3.10.15
 
 POWERLINE_DAEMON="$(pyenv which powerline-daemon)"
 if [ -e "$POWERLINE_DAEMON" ] && [ -z "$(ps aux | sed -e '/powerline-daemon/!d' -e '/sed -e/d')" ]; then
-	echo $POWERLINE_DAEMON
   $POWERLINE_DAEMON -q
 fi
 

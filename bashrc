@@ -1,7 +1,9 @@
 #
 # ~/.bashrc
 #
-PATH="/opt/vim/bin:$HOME/.cargo/bin:$HOME/.local/bin:$HOME/bin:/usr/local/bin:$PATH:/usr/sbin:/sbin:/usr/bin:/bin:/usr/local/games:/usr/games"
+EXTRA_PATH="/opt/vim/bin:$HOME/.cargo/bin:$HOME/.local/bin:/opt/homebrew/bin:$HOME/bin:/usr/local/bin"
+EXTRA_PATH="/opt/homebrew/opt/gnu-sed/libexec/gnubin:/opt/homebrew/opt/findutils/libexec/gnubin:$EXTRA_PATH"
+PATH="$EXTRA_PATH:$PATH:/usr/sbin:/sbin:/usr/bin:/bin:/usr/local/games:/usr/games"
 
 
 [[ $- != *i* ]] && return
@@ -33,17 +35,26 @@ colors() {
 	done
 }
 
+if [[ -r "/opt/homebrew/etc/bash_completion.d/" ]]; then
+    export BASH_COMPLETION_COMPAT_DIR=/opt/homebrew/etc/bash_completion.d/
+fi
 if [[ -r "/usr/local/etc/bash_completion.d/" ]]; then
     export BASH_COMPLETION_COMPAT_DIR=/usr/local/etc/bash_completion.d/
 fi
 if [[ -r "/usr/share/bash-completion/bash_completion" ]]; then
     . "/usr/share/bash-completion/bash_completion"
 fi
+if [[ -r "/opt/homebrew/etc/profile.d/bash_completion.sh" ]]; then
+    . "/opt/homebrew/etc/profile.d/bash_completion.sh"
+fi
 if [[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]]; then
     . "/usr/local/etc/profile.d/bash_completion.sh"
 fi
 
 # making Mac more like linux
+if [ -r /opt/homebrew/opt/coreutils/libexec/gnubin ]; then
+    PATH="/opt/homebrew/opt/coreutils/libexec/gnubin:$PATH"
+fi
 if [ -r /usr/local/opt/coreutils/libexec/gnubin ]; then
     PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
 fi
@@ -257,6 +268,10 @@ alias l='ls -CF'
 #   sleep 10; alert
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 
+if [[ -e "/opt/homebrew" ]] && [[ -e "/opt/homebrew/bin/brew" ]]; then
+    eval "$(/opt/homebrew/bin/brew shellenv)";
+fi
+
 export SYSTEMD_EDITOR=vim
 
 export GPG_TTY=$(tty)
@@ -287,7 +302,12 @@ if ! shopt -oq posix; then
 fi
 # >>> BEGIN ADDED BY CNCHI INSTALLER
 export BROWSER=/usr/local/bin/chromium
-export EDITOR=/usr/local/bin/vim
+if [ -r /opt/homebrew/bin/vim ]; then
+    export EDITOR=/opt/homebrew/bin/vim
+fi
+if [ -r /usr/local/bin/vim ]; then
+    export EDITOR=/usr/local/bin/vim
+fi
 if [ "$(uname -s)" != "Darwin" ]; then
     export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python2
     export BROWSER=/usr/bin/chromium
@@ -364,22 +384,10 @@ if [ -e "$(which powerline-daemon)" ]; then
     powerline-daemon -q
 fi
 
-if [ -f "/usr/lib/python3.10/site-packages/powerline/bindings/bash/powerline.sh" ]; then
+if [ -f "/opt/homebrew/lib/python3.13/site-packages/powerline/bindings/bash/powerline.sh" ]; then
+    . /opt/homebrew/lib/python3.13/site-packages/powerline/bindings/bash/powerline.sh
+elif [ -f "/usr/lib/python3.10/site-packages/powerline/bindings/bash/powerline.sh" ]; then
     . /usr/lib/python3.10/site-packages/powerline/bindings/bash/powerline.sh
-elif [ -f "/usr/lib/python3.9/site-packages/powerline/bindings/bash/powerline.sh" ]; then
-    . /usr/lib/python3.9/site-packages/powerline/bindings/bash/powerline.sh
-elif [ -f "/usr/lib/python3.8/site-packages/powerline/bindings/bash/powerline.sh" ]; then
-    . /usr/lib/python3.8/site-packages/powerline/bindings/bash/powerline.sh
-elif [ -f "/usr/lib/python3.7/site-packages/powerline/bindings/bash/powerline.sh" ]; then
-    . /usr/lib/python3.7/site-packages/powerline/bindings/bash/powerline.sh
-elif [ -f "/usr/local/lib/python3.7/site-packages/powerline/bindings/bash/powerline.sh" ]; then
-    . /usr/local/lib/python3.7/site-packages/powerline/bindings/bash/powerline.sh
-elif [ -f "/usr/local/lib/python2.7/site-packages/powerline/bindings/bash/powerline.sh" ]; then
-    . /usr/local/lib/python2.7/site-packages/powerline/bindings/bash/powerline.sh
-elif [ -f "/usr/local/lib/python2.7/dist-packages/powerline/bindings/bash/powerline.sh" ]; then
-    . /usr/local/lib/python2.7/dist-packages/powerline/bindings/bash/powerline.sh
-elif [ -f "/usr/lib/python2.7/site-packages/powerline/bindings/bash/powerline.sh" ]; then
-    . /usr/lib/python2.7/site-packages/powerline/bindings/bash/powerline.sh
 elif [ -f "/usr/share/powerline/bindings/bash/powerline.sh" ]; then
     . /usr/share/powerline/bindings/bash/powerline.sh
 fi
@@ -392,14 +400,14 @@ export PATH="$PYENV_ROOT/shims:$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
 
 # Lazy load pyenv-virtualenv
-if type pyenv-virtualenv &> /dev/null; then
-    function pyenv-virtualenv() {
-        unset -f pyenv-virtualenv > /dev/null 2>&1
-        eval "$(command pyenv virtualenv-init -)"
-        pyenv-virtualenv "$@"
-    }
-fi
-# eval "$(pyenv virtualenv-init -)"
+# if type pyenv-virtualenv &> /dev/null; then
+#     function pyenv-virtualenv() {
+#         unset -f pyenv-virtualenv > /dev/null 2>&1
+#         eval "$(command pyenv virtualenv-init -)"
+#         pyenv-virtualenv "$@"
+#     }
+# fi
+eval "$(pyenv virtualenv-init -)"
 # pyenv virtualenvwrapper
 
 if [[ -s "$HOME/.profile" ]]; then
@@ -417,11 +425,13 @@ eval "$(nodenv init -)"
 [[ -s "/etc/profile.d/grc.bashrc" ]] && source /etc/profile.d/grc.bashrc
 
 # MacOs version:
+[[ -s "/opt/homebrew/etc/grc.bashrc"  ]] && source /opt/homebrew/etc/grc.bashrc
 [[ -s "/usr/local/etc/grc.bashrc"  ]] && source /usr/local/etc/grc.bashrc
 
 # GRC 1.13:
 export GRC_ALIASES=true
 [[ -s "/etc/profile.d/grc.sh" ]] && source /etc/profile.d/grc.sh
+[[ -s "/opt/homebrew/etc/profile.d/grc.sh" ]] && source /opt/homebrew/etc/profile.d/grc.sh
 
 # }}}
 
@@ -434,4 +444,9 @@ export KUBECONFIG=$KUBECONFG:$HOME/.kube/config:$HOME/.kube/conv-eks-config
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH=$BUN_INSTALL/bin:$PATH
-export PATH="/usr/local/sbin:$PATH"
+export PATH="/usr/local/sbin:/opt/homebrew/sbin:$PATH"
+
+
+if [[ -r "/opt/homebrew/etc/bash_completion.d/" ]]; then
+		for completion in "/opt/homebrew/etc/bash_completion.d/"*; do . $completion; done
+fi

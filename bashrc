@@ -377,38 +377,36 @@ function precmd() {
 # }}}
 
 # Python and pyenv setup {{{
-POWERLINE_BASH_CONTINUATION=1
-POWERLINE_BASH_SELECT=1
-
-if [ -e "$(which powerline-daemon)" ]; then
-    powerline-daemon -q
-fi
-
-if [ -f "/opt/homebrew/lib/python3.13/site-packages/powerline/bindings/bash/powerline.sh" ]; then
-    . /opt/homebrew/lib/python3.13/site-packages/powerline/bindings/bash/powerline.sh
-elif [ -f "/usr/lib/python3.10/site-packages/powerline/bindings/bash/powerline.sh" ]; then
-    . /usr/lib/python3.10/site-packages/powerline/bindings/bash/powerline.sh
-elif [ -f "/usr/share/powerline/bindings/bash/powerline.sh" ]; then
-    . /usr/share/powerline/bindings/bash/powerline.sh
-fi
-
 export PYENV_VIRTUALENVWRAPPER_PREFER_PYVENV="true"
 export PYENV_VIRTUALENV_DISABLE_PROMPT=1
 export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/shims:$PYENV_ROOT/bin:$PATH"
 
 eval "$(pyenv init -)"
-
-# Lazy load pyenv-virtualenv
-# if type pyenv-virtualenv &> /dev/null; then
-#     function pyenv-virtualenv() {
-#         unset -f pyenv-virtualenv > /dev/null 2>&1
-#         eval "$(command pyenv virtualenv-init -)"
-#         pyenv-virtualenv "$@"
-#     }
-# fi
 eval "$(pyenv virtualenv-init -)"
-# pyenv virtualenvwrapper
+
+POWERLINE_BASH_CONTINUATION=1
+POWERLINE_BASH_SELECT=1
+
+pyenv shell 3.10.15
+
+POWERLINE_DAEMON="$(pyenv which powerline-daemon)"
+if [ -e "$POWERLINE_DAEMON" ] && [ -z "$(ps aux | sed -e '/powerline-daemon/!d' -e '/sed -e/d')" ]; then
+	echo $POWERLINE_DAEMON
+  $POWERLINE_DAEMON -q
+fi
+
+if [ -f "$HOME/.pyenv/versions/3.10.15/lib/python3.10/site-packages/powerline/bindings/bash/powerline.sh" ]; then
+	. $HOME/.pyenv/versions/3.10.15/lib/python3.10/site-packages/powerline/bindings/bash/powerline.sh
+elif [ -f "/opt/homebrew/lib/python3.13/site-packages/powerline/bindings/bash/powerline.sh" ]; then
+  . /opt/homebrew/lib/python3.13/site-packages/powerline/bindings/bash/powerline.sh
+elif [ -f "/usr/lib/python3.10/site-packages/powerline/bindings/bash/powerline.sh" ]; then
+  . /usr/lib/python3.10/site-packages/powerline/bindings/bash/powerline.sh
+elif [ -f "/usr/share/powerline/bindings/bash/powerline.sh" ]; then
+  . /usr/share/powerline/bindings/bash/powerline.sh
+fi
+
+pyenv shell --unset
 
 if [[ -s "$HOME/.profile" ]]; then
     if [[ -z "$(cat /etc/*-release | grep -i debian)" ]]; then

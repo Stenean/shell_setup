@@ -1,7 +1,12 @@
 #
 # ~/.bashrc
 #
-EXTRA_PATH="/opt/vim/bin:$HOME/.cargo/bin:$HOME/.local/bin:/opt/homebrew/bin:$HOME/bin:/usr/local/bin"
+
+if [[ -d "/opt/homebrew/bin" ]]; then
+	EXTRA_PATH="/opt/vim/bin:$HOME/.cargo/bin:$HOME/.local/bin:/opt/homebrew/bin:$HOME/bin:/usr/local/bin"
+else
+	EXTRA_PATH="/opt/vim/bin:$HOME/.cargo/bin:$HOME/.local/bin:$HOME/bin:/usr/local/bin"
+fi
 EXTRA_PATH="/opt/homebrew/opt/gnu-sed/libexec/gnubin:/opt/homebrew/opt/findutils/libexec/gnubin:$EXTRA_PATH"
 PATH="$EXTRA_PATH:$PATH:/usr/sbin:/sbin:/usr/bin:/bin:/usr/local/games:/usr/games"
 
@@ -52,10 +57,10 @@ if [[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]]; then
 fi
 
 # making Mac more like linux
-if [ -r /opt/homebrew/opt/coreutils/libexec/gnubin ]; then
+if [[ -r /opt/homebrew/opt/coreutils/libexec/gnubin ]]; then
     PATH="/opt/homebrew/opt/coreutils/libexec/gnubin:$PATH"
 fi
-if [ -r /usr/local/opt/coreutils/libexec/gnubin ]; then
+if [[ -r /usr/local/opt/coreutils/libexec/gnubin ]]; then
     PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
 fi
 
@@ -144,7 +149,7 @@ shopt -s histappend
 # # usage: ex <file>
 ex ()
 {
-  if [ -f $1 ] ; then
+  if [[ -f $1 ]] ; then
     case $1 in
       *.tar.bz2)   tar xjf $1   ;;
       *.tar.gz)    tar xzf $1   ;;
@@ -206,7 +211,7 @@ shopt -s checkwinsize
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
 # set variable identifying the chroot you work in (used in the prompt below)
-if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
+if [[ -z "${debian_chroot:-}" && -r /etc/debian_chroot ]]; then
     debian_chroot=$(cat /etc/debian_chroot)
 fi
 
@@ -220,8 +225,8 @@ esac
 # should be on the output of commands, not on the prompt
 #force_color_prompt=yes
 
-if [ -n "$force_color_prompt" ]; then
-    if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
+if [[ -n "$force_color_prompt" ]]; then
+    if [[ -x /usr/bin/tput ]] && tput setaf 1 >&/dev/null; then
 	# We have color support; assume it's compliant with Ecma-48
 	# (ISO/IEC-6429). (Lack of such support is extremely rare, and such
 	# a case would tend to support setf rather than setaf.)
@@ -231,7 +236,7 @@ if [ -n "$force_color_prompt" ]; then
     fi
 fi
 
-if [ "$color_prompt" = yes ]; then
+if [[ "$color_prompt" = yes ]]; then
     PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
 else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
@@ -248,7 +253,7 @@ xterm*|rxvt*)
 esac
 
 # enable color support of ls and also add handy aliases
-if [ -x /usr/bin/dircolors ]; then
+if [[ -x /usr/bin/dircolors ]]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
     alias ls='ls --color=auto'
     #alias dir='dir --color=auto'
@@ -277,7 +282,7 @@ export SYSTEMD_EDITOR=vim
 export GPG_TTY=$(tty)
 # Make the ssh agent the gpg-agent process
 export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket);
-if [ "$(uname -s)" == "Darwin" ]; then
+if [[ "$(uname -s)" == "Darwin" ]]; then
     test -z "$(ps aux | sed -e '/gpg/!d' -e '/sed/d')" && gpgconf --launch gpg-agent
 fi
 
@@ -286,7 +291,7 @@ fi
 # ~/.bash_aliases, instead of adding them here directly.
 # See /usr/share/doc/bash-doc/examples in the bash-doc package.
 
-if [ -f ~/.bash_aliases ]; then
+if [[ -f ~/.bash_aliases ]]; then
     . ~/.bash_aliases
 fi
 
@@ -294,28 +299,28 @@ fi
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
 # sources /etc/bash.bashrc).
 if ! shopt -oq posix; then
-  if [ -f /usr/share/bash-completion/bash_completion ]; then
+  if [[ -f /usr/share/bash-completion/bash_completion ]]; then
     . /usr/share/bash-completion/bash_completion
-  elif [ -f /etc/bash_completion ]; then
+  elif [[ -f /etc/bash_completion ]]; then
     . /etc/bash_completion
   fi
 fi
 # >>> BEGIN ADDED BY CNCHI INSTALLER
 export BROWSER=/usr/local/bin/chromium
-if [ -r /opt/homebrew/bin/vim ]; then
+if [[ -r /opt/homebrew/bin/vim ]]; then
     export EDITOR=/opt/homebrew/bin/vim
 fi
-if [ -r /usr/local/bin/vim ]; then
+if [[ -r /usr/local/bin/vim ]]; then
     export EDITOR=/usr/local/bin/vim
 fi
-if [ "$(uname -s)" != "Darwin" ]; then
+if [[ "$(uname -s)" != "Darwin" ]]; then
     export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python2
     export BROWSER=/usr/bin/chromium
     export EDITOR=/usr/bin/vim
 fi
 # <<< END ADDED BY CNCHI INSTALLER
 
-if [ -s "$HOME/.gvm/scripts/gvm" ]; then
+if [[ -s "$HOME/.gvm/scripts/gvm" ]]; then
     source "$HOME/.gvm/scripts/gvm"
 fi
 
@@ -326,7 +331,7 @@ export AWS_SHARED_CREDENTIALS_FILE="$HOME/Downloads/credentials"
 
 DEFAULT_USER="kuba"
 
-if [ -n "$(command -v xmodmap)" ]; then
+if [[ -n "$(command -v xmodmap)" ]]; then
     xmodmap -e "keycode 166=Prior"
     xmodmap -e "keycode 167=Next"
 fi
@@ -339,7 +344,7 @@ function whatsmyip() {
 
 function find_and_activate_virtualenv() {
 # {{{
-    if [ -n "$(env | grep -E '^VIRTUAL_ENV')" ]; then
+    if [[ -n "$(env | grep -E '^VIRTUAL_ENV')" ]]; then
         return;
     fi
 
@@ -369,7 +374,7 @@ function preexec() {
 
 function precmd() {
 # {{{
-    if [ $timer ]; then
+    if [[ $timer ]]; then
         export timer_show=$(($SECONDS - $timer))
         unset timer
     fi
@@ -391,26 +396,24 @@ POWERLINE_BASH_SELECT=1
 pyenv shell 3.10.15
 
 POWERLINE_DAEMON="$(pyenv which powerline-daemon)"
-if [ -e "$POWERLINE_DAEMON" ] && [ -z "$(ps aux | sed -e '/powerline-daemon/!d' -e '/sed -e/d')" ]; then
+if [[ -e "$POWERLINE_DAEMON" && -z "$(ps aux | sed -e '/powerline-daemon/!d' -e '/sed -e/d')" ]]; then
   $POWERLINE_DAEMON -q
 fi
 
-if [ -f "$HOME/.pyenv/versions/3.10.15/lib/python3.10/site-packages/powerline/bindings/bash/powerline.sh" ]; then
+if [[ -f "$HOME/.pyenv/versions/3.10.15/lib/python3.10/site-packages/powerline/bindings/bash/powerline.sh" ]]; then
 	. $HOME/.pyenv/versions/3.10.15/lib/python3.10/site-packages/powerline/bindings/bash/powerline.sh
-elif [ -f "/opt/homebrew/lib/python3.13/site-packages/powerline/bindings/bash/powerline.sh" ]; then
+elif [[ -f "/opt/homebrew/lib/python3.13/site-packages/powerline/bindings/bash/powerline.sh" ]]; then
   . /opt/homebrew/lib/python3.13/site-packages/powerline/bindings/bash/powerline.sh
-elif [ -f "/usr/lib/python3.10/site-packages/powerline/bindings/bash/powerline.sh" ]; then
+elif [[ -f "/usr/lib/python3.10/site-packages/powerline/bindings/bash/powerline.sh" ]]; then
   . /usr/lib/python3.10/site-packages/powerline/bindings/bash/powerline.sh
-elif [ -f "/usr/share/powerline/bindings/bash/powerline.sh" ]; then
+elif [[ -f "/usr/share/powerline/bindings/bash/powerline.sh" ]]; then
   . /usr/share/powerline/bindings/bash/powerline.sh
 fi
 
 pyenv shell --unset
 
 if [[ -s "$HOME/.profile" ]]; then
-    if [[ -z "$(cat /etc/*-release | grep -i debian)" ]]; then
 	source $HOME/.profile
-    fi
 fi
 
 # Add nodenv
@@ -441,7 +444,13 @@ export KUBECONFIG=$KUBECONFG:$HOME/.kube/config:$HOME/.kube/conv-eks-config
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH=$BUN_INSTALL/bin:$PATH
-export PATH="/usr/local/sbin:/opt/homebrew/sbin:$PATH"
+if [[ -d "/opt/homebrew/sbin" && $PATH != *"/opt/homebrew/sbin"* ]]; then
+	export PATH="/opt/homebrew/sbin:$PATH"
+fi
+if [[ $PATH == *"/opt/homebrew/bin"* ]]; then
+	export PATH="/opt/homebrew/bin:"$(sed -e "s:/opt/homebrew/bin\:::g" <<<"$PATH")
+fi
+export PATH="/usr/local/sbin:$PATH"
 
 
 if [[ -r "/opt/homebrew/etc/bash_completion.d/" ]]; then

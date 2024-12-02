@@ -36,7 +36,7 @@
     new = green bold
     whitespace = red reverse
 [commit]
-	gpgsign = false
+	gpgsign = true
 [filter "lfs"]
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
@@ -67,3 +67,5 @@
     hunk-header-file-style = red
     hunk-header-line-number-style = "#067a00"
     hunk-header-style = file line-number syntax
+[branch]
+	sort = -committerdate

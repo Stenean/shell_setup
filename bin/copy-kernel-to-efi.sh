@@ -13,3 +13,4 @@ done
 eval cp -v /boot/$INITRAMFS /boot/efi/EFI/Manjaro/
 # eval cp -v /boot/$INITRAMFS_FALLBACK /boot/efi/EFI/Manjaro/
 cp -v /boot/amd-ucode.img /boot/efi/EFI/Manjaro/
+cp -v /boot/intel-ucode.img /boot/efi/EFI/Manjaro/
